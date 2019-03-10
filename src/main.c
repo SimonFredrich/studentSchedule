@@ -10,36 +10,68 @@ struct homework {
     char desciption[100];
 };
 
-void saveHomework(struct homework details);
+void saveHomework(struct homework detailsWrite);
+void displayAllHomework(struct homework detailsRead);
+void userWrite();
+void userRead();
 
 int main(int argc, char **argv) {
 
-    struct homework details;
-
-    printf("Enter homework id: ");
-    scanf(" %d", &details.id);
-
-    printf("Enter homework title: ");
-    scanf(" %s", details.title);
-
-    printf("Enter homework desciption: ");
-    scanf(" %s", details.desciption);
-
-    saveHomework(details);
+    userRead();
 
     return 0;
 }
 
-void saveHomework(struct homework details) {
+void saveHomework(struct homework detailsWrite) {
     FILE *pfile;
 
-    printf("%d\n", details.id);
-    printf("%s\n", details.title);
-    printf("%s\n", details.desciption);
+    printf("%d\n", detailsWrite.id);
+    printf("%s\n", detailsWrite.title);
+    printf("%s\n", detailsWrite.desciption);
 
     pfile = fopen(fileLocation, "ab");
 
-    fwrite(&details, sizeof(details), 1, pfile);
+    fwrite(&detailsWrite, sizeof(detailsWrite), 1, pfile);
 
     fclose(pfile);
+}
+
+void displayAllHomework(struct homework detailsRead) {
+    FILE *pfile;
+
+    pfile = fopen(fileLocation, "rb");
+
+    while(1) {
+        fread(&detailsRead, sizeof(detailsRead), 1, pfile);
+
+        if (feof(pfile)) {
+            break;
+        }
+
+        printf("%d\n", detailsRead.id);
+        printf("%s\n", detailsRead.title);
+        printf("%s\n", detailsRead.desciption);
+    }
+    fclose(pfile);
+}
+
+void userWrite() {
+    struct homework detailsWrite;
+
+    printf("Enter homework id: ");
+    scanf(" %d", &detailsWrite.id);
+
+    printf("Enter homework title: ");
+    scanf(" %s", detailsWrite.title);
+
+    printf("Enter homework desciption: ");
+    scanf(" %s", detailsWrite.desciption);
+
+    saveHomework(detailsWrite);
+}
+
+void userRead() {
+    struct homework detailsRead;
+
+    displayAllHomework(detailsRead);
 }
