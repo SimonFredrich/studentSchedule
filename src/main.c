@@ -73,7 +73,7 @@ void displayAllHomework(struct homework detailsRead) {
         }
 
         printf("%d\t\t", detailsRead.id);
-        printf("%s\t\t", detailsRead.title);
+        printf("%s\t", detailsRead.title);
         printf("%s\n", detailsRead.descritiption);
         printf("-------------------------------------------------------------------------\n");
     }
